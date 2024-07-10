@@ -80,6 +80,8 @@ class PositionalEncoding(Module):
         return input
 ```
 
+![positional_encoding](plots/positional-encoding-10000.png)
+
 ### Self-Attention
 
 Given three tensors $Q, K, V \in \mathbb{R}^{l \times d_k}$, $\mathbb{R}^{l \times d_k}$ and $\mathbb{R}^{l \times d_v}$ respectively, the attention is calculated as:
