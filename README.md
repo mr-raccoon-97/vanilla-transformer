@@ -165,6 +165,57 @@ The concatenation of the outputs of each head is done in the dimension $d/h$ and
 
 Finally, the output is multiplied by the matrix $W^O \in \mathbb{R}^{d_v \times d}$ to obtain the final result of the multi-head attention layer, which will have dimension $l \times d$.
 
+Note that $h$ projectors $W^P$ of dimension $d/h \times d_p$ and multiplying them by the input tensors, is equal to defining a single tensor $W^P$ of dimension $d \times d_p$ with which a single projection $P$ is generated, from the input tensor, and then perform the "split" of the dimension $d$ into $h$ parts.
+
+So the multi-head attention mechanism will be:
+
+$$ \text{Attention}(Q, K, V) = \text{Softmax}(
+\begin{bmatrix} 
+    \begin{bmatrix} 
+        q^1_1 & q^1_2 & \cdots & q^1_{d_k/h}  \\
+    \vdots & \vdots & \ddots  & \vdots \\
+        q^l_1 & q^l_2 & \cdots & q^l_{d_k/h}  \\
+    \end{bmatrix} 
+    \begin{bmatrix} 
+        k^1_1 & k^1_2 & \cdots & k^l_1  \\
+        \vdots & \vdots & \ddots  & \vdots \\
+        k^1_{d_k/h} & k^l_2 & \cdots & k^l_{d_k/h}  \\
+    \end{bmatrix} \\ 
+    \vdots \\ 
+    \begin{bmatrix} 
+        q^1_{d_k\frac{(h-1)}{h}+1} & \cdots & q^1_{d_k}  \\
+    \vdots & \vdots & \ddots  & \vdots \\
+        q^l_{d_k\frac{(h-1)}{h}+1} & \cdots & q^l_{d_k}  \\
+    \end{bmatrix}
+    \begin{bmatrix} 
+        k^1_{d_k\frac{(h-1)}{h}+1} & \cdots &  k^l_{d_k\frac{(h-1)}{h}+1}  \\
+        \vdots & \vdots & \vdots\\
+        k^1_{d_k} & \cdots & k^l_{d_k}  \\
+    \end{bmatrix} \\
+\end{bmatrix} 
+    / \sqrt{d_k/h} 
+)
+\begin{bmatrix} 
+    \begin{bmatrix} 
+        v^1_1 & v^1_2 & \cdots & v^1_{d_v/h}  \\
+        \vdots & \vdots & \ddots  & \vdots \\
+        v^l_1 & v^l_2 & \cdots & v^l_{d_v/h}  \\
+    \end{bmatrix} \\
+    \vdots \\
+    \begin{bmatrix} 
+        v^1_1 & v^1_2 & \cdots & v^1_{d_v/h}  \\
+        \vdots & \vdots & \ddots  & \vdots \\
+        v^l_1 & v^l_2 & \cdots & v^l_{d_v/h}  \\
+    \end{bmatrix}
+\end{bmatrix} $$ 
+
+Where each matrix inside the tensors corresponds to an attention head. The result of the attention function is a tensor of dimension $h \times l \times l$. Which is multiplied by the tensor $V$ resulting in a tensor of dimension $h \times l \times d_v/h$.
+
+The concatenation of the outputs of each head is done in the dimension $d_v/h$ and is the inverse process to the one described for the "split" so that the final result is a tensor of dimension $l \times d_v$.
+
+Finally, the output is multiplied by the matrix $W^O \in \mathbb{R}^{d_v \times d}$ to obtain the final result of the multi-head attention layer, which will have dimension $l \times d$.
+
+
 
 ```python	
 
