@@ -17,9 +17,9 @@ The paper introduces the following concepts:
 
 ### Positional Encoding
 
-Let $ X \in \mathbb{R}^{l \times d} $ a sequence of $l$ vectors embeddings of dimension $d$.
+Let $X \in \mathbb{R}^{l \times d}$ a sequence of $l$ vectors embeddings of dimension $d$.
 
-$$ X = \begin{bmatrix}
+$$X = \begin{bmatrix}
     \vec{x}^1 \\
     \vec{x}^2 \\
     \vdots \\
@@ -31,22 +31,20 @@ $$ X = \begin{bmatrix}
     x^l_1 & x^l_2 & \cdots & x^l_d
 \end{bmatrix} $$
 
-With $ \vec{x}^t \in \mathbb{R}^d $ the embedding vector of the word at position $t$ in the sequence. To inform the embedding vectors about their position, each one is added the vector $ \vec{p} ^ t $ that we will describe below.
+With $\vec{x}^t \in \mathbb{R}^d$ the embedding vector of the word at position $t$ in the sequence. To inform the embedding vectors about their position, each one is added the vector $\vec{p} ^ t$ that we will describe below.
  
-$$ \vec{p}^t = \begin{bmatrix} p^t_1 & p^t_2 & \cdots p^t_d \end{bmatrix} $$ 
+$$\vec{p}^t = \begin{bmatrix} p^t_1 & p^t_2 & \cdots p^t_d \end{bmatrix}$$ 
 
-The attention is all you need paper, proposes a positional encoding function $ \text{P}: \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{R}^d $ as:
+The attention is all you need paper, proposes a positional encoding function $\text{P}: \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{R}^d $ as:
 
 $$\text{P}(t, s)  = \begin{cases} 
     \sin(\omega_k t) & \text{si } s = 2k \\
     \cos(\omega_k t) & \text{si } s = 2k + 1
-\end{cases}
-$$
+\end{cases}$$
 
-With the "frequencies" defined by $$ \omega_k = \frac{1}{N ^ {2 k /d}} = \exp(-\frac{2k}{d}\log(N))$$
+With the "frequencies" defined by $$\omega_k = \frac{1}{N ^ {2 k /d}} = \exp(-\frac{2k}{d}\log(N))$$
 
 And a constant $N$.
-
 
 The positional encoding matrix $ P \in \mathbb{R}^{l \times d} $ will be:
 
