@@ -20,9 +20,9 @@ jobs:
         echo $CONDA/bin >> $GITHUB_PATH
     - name: Install dependencies
       run: |
-        conda install conda-forge::numpy
-        conda install -c conda-forge matplotlib
-        conda install pytorch torchvision torchaudio cpuonly -c pytorch
+        conda install conda-forge::numpy -y
+        conda install -c conda-forge matplotlib -y
+        conda install pytorch torchvision torchaudio cpuonly -c pytorch -y
     - name: Lint with flake8
       run: |
         conda install flake8
