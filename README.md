@@ -209,7 +209,7 @@ $$ \text{Attention}(Q, K, V) = \text{Softmax}(
     \end{bmatrix}
 \end{bmatrix} $$ 
 
-Where each matrix inside the tensors corresponds to an attention head. The result of the attention function is a tensor of dimension $h \times l \times l$. Which is multiplied by the tensor $V$ resulting in a tensor of dimension $h \times l \times d_v/h$.
+Where each matrix inside the tensors corresponds to an attention head. The result of the attention function is a tensor of dimension $h\times l\times l$. Which is multiplied by the tensor $V$ resulting in a tensor of dimension $h \times l \times d_v/h$.
 
 The concatenation of the outputs of each head is done in the dimension $d_v/h$ and is the inverse process to the one described for the "split" so that the final result is a tensor of dimension $l \times d_v$.
 
