@@ -35,7 +35,7 @@ With $\vec{x}^t \in \mathbb{R}^d$ the embedding vector of the word at position $
  
 $$\vec{p}^t = \begin{bmatrix} p^t_1 & p^t_2 & \cdots p^t_d \end{bmatrix}$$ 
 
-The attention is all you need paper, proposes a positional encoding function $\text{P}: \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{R}^d $ as:
+The attention is all you need paper, proposes a positional encoding function $\text{P}:\mathbb{N}\times\mathbb{N}\rightarrow\mathbb{R}^d$ as:
 
 $$\text{P}(t, s)  = \begin{cases} 
     \sin(\omega_k t) & \text{si } s = 2k \\
@@ -46,7 +46,7 @@ With the "frequencies" defined by $$\omega_k = \frac{1}{N ^ {2 k /d}} = \exp(-\f
 
 And a constant $N$.
 
-The positional encoding matrix $ P \in \mathbb{R}^{l \times d} $ will be:
+The positional encoding matrix $P \in \mathbb{R}^{l \times d}$ will be:
 
 $$ P = \begin{bmatrix}
     0 & 1 & 0 & 1 & \cdots & 0 & 1 \\
@@ -56,9 +56,9 @@ $$ P = \begin{bmatrix}
     \sin(\omega_1 (l-1)) & \cos(\omega_1 (l-1)) & \sin(\omega_2 (l-1)) & \cos(\omega_2 (l-1)) & \cdots & \sin(\omega_{d/2} (l-1)) & \cos(\omega_{d/2} (l-1))
 \end{bmatrix} $$
 
-The positional encoding matrix $ P $ is pre-computed only once and is added to the sequence of embeddings $ X $ at each step of the network.
+The positional encoding matrix $P$ is pre-computed only once and is added to the sequence of embeddings $X$ at each step of the network.
 
-$$ X := X + P $$
+$$X := X + P$$
 
 
 ```python
@@ -214,8 +214,6 @@ Where each matrix inside the tensors corresponds to an attention head. The resul
 The concatenation of the outputs of each head is done in the dimension $d_v/h$ and is the inverse process to the one described for the "split" so that the final result is a tensor of dimension $l \times d_v$.
 
 Finally, the output is multiplied by the matrix $W^O \in \mathbb{R}^{d_v \times d}$ to obtain the final result of the multi-head attention layer, which will have dimension $l \times d$.
-
-
 
 ```python	
 

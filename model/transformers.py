@@ -103,10 +103,6 @@ class FeedForward(Module):
         return self.layers(input)
     
 
-
-from torch import Tensor
-from torch.nn import Module
-
 class Encoder(Module):
     def __init__(self, model_dimension: int, ffn_dimension: int, number_of_heads: int, dropout: float = 0.2, bias: bool = False):
         super().__init__()
