@@ -252,7 +252,7 @@ class MultiheadAttention(Module):
         return heads @ self.output_projector_weight.T
 ```
 
-There are also implementations of the layer normalization and feed forward layers, the encoder and decoder, the transoformer and some other details here: [notebook](attention-is-all-you-need-(2017).ipynb)
+There are also implementations of the layer normalization and feed forward layers, the encoder and decoder, the transformer and some other details here: [notebook](attention-is-all-you-need-(2017).ipynb)
 
 The models are in the folder [model](model) and I wrote some tests for the model in the folder [tests](tests).
 
