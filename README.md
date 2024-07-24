@@ -177,9 +177,9 @@ $$ \text{Attention}(Q, K, V) = \text{Softmax}(
         q^l_1 & q^l_2 & \cdots & q^l_{d_k/h}  \\
     \end{bmatrix} 
     \begin{bmatrix} 
-        k^1_1 & k^1_2 & \cdots & k^l_1  \\
+        k^1_1 & k^2_1 & \cdots & k^l_1  \\
         \vdots & \vdots & \ddots  & \vdots \\
-        k^1_{d_k/h} & k^l_2 & \cdots & k^l_{d_k/h}  \\
+        k^1_{d_k/h} & k^2_{d_k/h} & \cdots & k^l_{d_k/h}  \\
     \end{bmatrix} \\ 
     \vdots \\ 
     \begin{bmatrix} 
