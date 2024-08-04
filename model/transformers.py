@@ -41,12 +41,12 @@ def attention(query: Tensor, key: Tensor, value: Tensor, mask: Optional[Tensor] 
 
 def split(sequence: Tensor, number_of_heads: int) -> Tensor:
     batch_size, sequence_length, model_dimension = sequence.size()
-    sequence = sequence.view(batch_size, sequence_length, model_dimension // number_of_heads, number_of_heads)
+    sequence = sequence.view(batch_size, sequence_length, number_of_heads, model_dimension // number_of_heads)
     sequence = sequence.transpose(1, 2)
     return sequence
 
 def concat(sequence: Tensor) -> Tensor:
-    batch_size, heads_dimension, sequence_lenght, number_of_heads = sequence.size()
+    batch_size, number_of_heads, sequence_lenght, heads_dimension = sequence.size()
     sequence = sequence.transpose(1, 2).contiguous()
     sequence = sequence.view(batch_size, sequence_lenght, heads_dimension* number_of_heads)
     return sequence
