@@ -30,8 +30,6 @@ class PositionalEncoding(Module):
         input = input + self.embeddings[:,:input.size(1)]
         return input
 
-
-
 def attention(query: Tensor, key: Tensor, value: Tensor, mask: Optional[Tensor] = None) -> Tensor:        
     scale = 1 / math.sqrt(key.size(-1))
     score = query @ key.transpose(-2, -1) * scale
@@ -55,23 +53,17 @@ class MultiheadAttention(Module):
     def __init__(self, model_dimension: int, key_dimension: int, value_dimension: int, number_of_heads):
         super().__init__()
         self.number_of_heads = number_of_heads
-        self.query_projector_weight = Parameter(torch.empty(model_dimension, model_dimension))
-        self.key_projector_weight = Parameter(torch.empty(model_dimension, key_dimension))
-        self.value_projector_weight = Parameter(torch.empty(model_dimension, value_dimension))
-        self.output_projector_weight = Parameter(torch.empty(model_dimension, model_dimension))
-
-        init.xavier_normal_(self.query_projector_weight)
-        init.xavier_normal_(self.key_projector_weight)
-        init.xavier_normal_(self.value_projector_weight)
-        init.xavier_normal_(self.output_projector_weight)
-
+        self.query_projector = Linear(model_dimension, model_dimension, bias=False)
+        self.key_projector = Linear(key_dimension, model_dimension, bias=False)
+        self.value_projector = Linear(value_dimension, model_dimension, bias=False)
+        self.output_projector = Linear(model_dimension, model_dimension, bias=False)
 
     def forward(self, query: Tensor, key: Tensor, value: Tensor, mask: Optional[Tensor] = None) -> Tensor:
-        query, key, value = query @ self.query_projector_weight.T, key @ self.key_projector_weight.T, value @ self.value_projector_weight.T
+        query, key, value = self.query_projector(query), self.key_projector(key), self.value_projector(value)
         query, key, value = split(query, self.number_of_heads), split(key, self.number_of_heads), split(value, self.number_of_heads)
         heads = attention(query, key, value, mask)
         heads = concat(heads)
-        return heads @ self.output_projector_weight.T
+        return self.output_projector(heads)
     
 
 class LayerNormalization(Module):

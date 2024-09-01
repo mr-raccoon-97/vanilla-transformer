@@ -37,10 +37,10 @@ def test_multihead_attention():
 
     multihead = MultiheadAttention(512, 256, 256, 8)
     pytorch_multihead = PytorchMultiheadAttention(512, 8, kdim=256, vdim=256, bias=False)
-    pytorch_multihead.q_proj_weight = Parameter(multihead.query_projector_weight.detach().clone())
-    pytorch_multihead.k_proj_weight = Parameter(multihead.key_projector_weight.detach().clone())
-    pytorch_multihead.v_proj_weight = Parameter(multihead.value_projector_weight.detach().clone())
-    pytorch_multihead.out_proj.weight = Parameter(multihead.output_projector_weight.detach().clone())
+    pytorch_multihead.q_proj_weight = Parameter(multihead.query_projector.weight.detach().clone())
+    pytorch_multihead.k_proj_weight = Parameter(multihead.key_projector.weight.detach().clone())
+    pytorch_multihead.v_proj_weight = Parameter(multihead.value_projector.weight.detach().clone())
+    pytorch_multihead.out_proj.weight = Parameter(multihead.output_projector.weight.detach().clone())
 
     assert torch.allclose(multihead(query, key, value), pytorch_multihead(query, key, value)[0], atol=1e-5)
 
@@ -51,9 +51,9 @@ def test_multihead_attention():
     multihead = MultiheadAttention(512, 512, 512, 8)
     pytorch_multihead = PytorchMultiheadAttention(512, 8)
     with torch.no_grad():
-        pytorch_multihead.in_proj_weight[:512,:].copy_(multihead.query_projector_weight.detach().clone())
-        pytorch_multihead.in_proj_weight[512:512+512,:].copy_(multihead.key_projector_weight.detach().clone())
-        pytorch_multihead.in_proj_weight[512+512:512+512+512,:].copy_(multihead.value_projector_weight.detach().clone())
-        pytorch_multihead.out_proj.weight = Parameter(multihead.output_projector_weight.detach().clone())
+        pytorch_multihead.in_proj_weight[:512,:].copy_(multihead.query_projector.weight.detach().clone())
+        pytorch_multihead.in_proj_weight[512:512+512,:].copy_(multihead.key_projector.weight.detach().clone())
+        pytorch_multihead.in_proj_weight[512+512:512+512+512,:].copy_(multihead.value_projector.weight.detach().clone())
+        pytorch_multihead.out_proj.weight = Parameter(multihead.output_projector.weight.detach().clone())
 
     assert torch.allclose(multihead(query, key, value), pytorch_multihead(query, key, value)[0], atol=1e-5)
