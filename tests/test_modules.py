@@ -18,8 +18,6 @@ def test_layer_normalization():
     pytorch_layer_norm.bias = Parameter(layer_norm.beta.detach().clone())
 
     input = torch.randn(8, 32, 512)
-
-    #TODO: The values are not close enough, need to investigate.
     assert torch.allclose(layer_norm(input), pytorch_layer_norm(input), atol=1e-2)
 
 

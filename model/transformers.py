@@ -45,8 +45,8 @@ def split(sequence: Tensor, number_of_heads: int) -> Tensor:
 
 def concat(sequence: Tensor) -> Tensor:
     batch_size, number_of_heads, sequence_lenght, heads_dimension = sequence.size()
-    sequence = sequence.transpose(1, 2).contiguous()
-    sequence = sequence.view(batch_size, sequence_lenght, heads_dimension* number_of_heads)
+    sequence = sequence.transpose(1, 2)
+    sequence = sequence.reshape(batch_size, sequence_lenght, heads_dimension* number_of_heads)
     return sequence
 
 class MultiheadAttention(Module):
